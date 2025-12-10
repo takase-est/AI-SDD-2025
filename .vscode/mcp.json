@@ -1,0 +1,22 @@
+{
+	"servers": {
+		"deepwiki": {
+			"url": "https://mcp.deepwiki.com/mcp",
+			"type": "http"
+		},
+		"playwright": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"@playwright/mcp@latest"
+			]
+		},
+		"CPS": {
+			"command": "node",
+			"args": [
+				"/Users/lostandfound/mcp/mcp-instruction-server/build/index.js"
+			]
+		}
+	},
+	"inputs": []
+}
