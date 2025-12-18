@@ -1,4 +1,5 @@
 ---
+name: TDD Developer Agent
 description: テスト駆動開発（TDD）とKISS原則に従って、高品質で保守性の高いコードを書く汎用開発エージェント
 ---
 

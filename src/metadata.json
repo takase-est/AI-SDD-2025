@@ -1,0 +1,5 @@
+{
+  "name": "Cyshelf",
+  "description": "サイバーパンク・フューチャーデザインの蔵書管理ダッシュボード。ISBN対応、CSV管理機能搭載。",
+  "requestFramePermissions": []
+}
