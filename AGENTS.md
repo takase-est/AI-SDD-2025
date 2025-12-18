@@ -10,6 +10,8 @@
 - From root: install deps `npm install`.
 - Run locally `npm run dev` (Vite dev server, hot reload).
 - Production bundle `npm run build`; preview the built output `npm run preview`.
+- Run tests `npm test`; interactive UI `npm run test:ui`; coverage `npm run test:coverage`.
+- Lint code `npm run lint`; auto-fix `npm run lint:fix`.
 - Set `GEMINI_API_KEY` in `.env.local` at root before running; the app reads it at start.
 
 ## Coding Style & Naming
@@ -17,10 +19,24 @@
 - Indent 2 spaces; single quotes; trailing commas where sensible. Keep components small and pure; avoid mutating state directly.
 - Components and types use `PascalCase`; helpers `camelCase`; exported constants `SCREAMING_SNAKE_CASE`; files in `components/` use `PascalCase.tsx`.
 - Use the existing path alias `@/*` (tsconfig) if you reorganize imports.
+- **Linting**: ESLint v9 with flat config (`eslint.config.js`). Test files are also linted with appropriate globals.
+- **Type Safety**: TypeScript strict mode; jest-dom types configured in `tsconfig.json` and `vitest-env.d.ts`.
 
 ## Testing Guidelines
-- No automated test suite yet; do manual QA for pagination, sorting, CSV import/export, favorites, and status changes after edits.
-- When adding logic-heavy code, prefer adding lightweight React Testing Library or vitest coverage; name test files `*.test.ts(x)` alongside the module.
+- **Test Framework**: Vitest + React Testing Library with jsdom environment.
+- **Test Structure**: 
+  - Unit tests: `tests/unit/` (e.g., `csvParser.test.ts`)
+  - Component tests: `tests/components/` (e.g., `BookForm.test.tsx`, `Modal.test.tsx`, `App.test.tsx`)
+  - Integration tests: `tests/integration/` (e.g., `csvFlow.test.tsx`, `storageFlow.test.tsx`)
+- **Test Commands**: 
+  - `npm test` - Run all tests
+  - `npm run test:ui` - Interactive test UI
+  - `npm run test:coverage` - Generate coverage report
+- **Test Naming**: Use `*.test.ts(x)` or `*.spec.ts(x)` pattern.
+- **TDD Approach**: Follow Red-Green-Refactor cycle; use Given/When/Then comments in tests.
+- **Test Setup**: `tests/setup.ts` configures jest-dom matchers and cleanup.
+- **Test Report**: See `tests/TEST_REPORT.md` for test implementation details and results.
+- Manual QA still recommended for complex UI interactions and edge cases.
 
 ## Commit & Pull Request Guidelines
 - Use concise, imperative commit messages (e.g., `Add CSV error handling`); group related changes together.
