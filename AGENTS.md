@@ -51,7 +51,8 @@ CYSHELFは、サイバーパンク風のUIを持つ蔵書管理システムで�
 │       ├── CODING_STANDARDS.md  # コーディング規約
 │       └── GITHUB.md     # GitHub運用ガイド
 └── .github/               # GitHub設定
-    └── agents/            # AIエージェント設定
+    ├── agents/            # AIエージェント設定
+    └── prompts/           # エージェントプロンプト
 ```
 
 ### 主要ファイル
@@ -76,7 +77,7 @@ CYSHELFは、サイバーパンク風のUIを持つ蔵書管理システムで�
 - **カバレッジ**: `npm run test:coverage`（カバレッジレポート生成）
 - **リント**: `npm run lint`
 - **リント自動修正**: `npm run lint:fix`
--- **環境変数**: このフロントエンドはクライアントバンドルに機密情報を含めない設計です。機密キーはサーバー側で管理してください。
+- **環境変数**: このフロントエンドはクライアントバンドルに機密情報を含めない設計です。機密キーはサーバー側で管理してください。
   - ローカル開発で外部サービスと連携する必要がある場合は、テスト用の非機密トークンを使うか、安全なモックエンドポイントを利用してください。
 
 ## コーディングスタイルと命名規則
@@ -88,23 +89,14 @@ CYSHELFは、サイバーパンク風のUIを持つ蔵書管理システムで�
 ## テストガイドライン
 
 - **テストフレームワーク**: Vitest + React Testing Library (jsdom環境)
-- **テスト構造**:
-  - ユニットテスト: `tests/unit/` (例: `csvParser.test.ts`)
-  - コンポーネントテスト: `tests/components/` (例: `BookForm.test.tsx`, `Modal.test.tsx`, `App.test.tsx`)
-  - 統合テスト: `tests/integration/` (例: `csvFlow.test.tsx`, `storageFlow.test.tsx`)
-- **テストコマンド**:
-  - `npm test` - すべてのテストを実行
-  - `npm run test:ui` - インタラクティブテストUI
-  - `npm run test:coverage` - カバレッジレポートを生成
-- **テスト命名**: `*.test.ts(x)` または `*.spec.ts(x)` パターンを使用
-- **TDDアプローチ**: Red-Green-Refactorサイクルに従う、テストにGiven/When/Thenコメントを使用
-- **テストセットアップ**: `tests/setup.ts` でjest-domマッチャーとクリーンアップを設定
-- **テストレポート**: 詳細は `tests/TEST_REPORT.md` を参照
-- **手動QA**: 複雑なUI操作やエッジケースについては手動QAも推奨
+- **テスト構造**: ユニットテスト（`tests/unit/`）、コンポーネントテスト（`tests/components/`）、統合テスト（`tests/integration/`）
+- **テストコマンド**: `npm test`（全テスト実行）、`npm run test:ui`（インタラクティブUI）、`npm run test:coverage`（カバレッジ）
+- **TDDアプローチ**: Red-Green-Refactorサイクルに従う
+- **詳細**: テストレポートと詳細は [tests/TEST_REPORT.md](tests/TEST_REPORT.md) を参照
 
 ## コミットとプルリクエストガイドライン
 
-- **コミットメッセージ**: 簡潔で命令形（例: `Add CSV error handling`）、関連する変更をまとめる
+- **コミットメッセージ**: 簡潔で命令形（例: `CSVエラーハンドリングを追加`）、関連する変更をまとめる。日本語で記載
 - **PR内容**: 短い要約、UI変更の主要なスクリーンショット/gif、明確な手動テスト手順（コマンド + 実行したシナリオ）、追跡イシューへのリンク
 - **テンプレート**: Issue/PR作成時は`.github`配下のテンプレートを使用
 - **GitHub CLI**: `gh`コマンドのインストールを推奨（Issue/PRの作成・管理が効率的）
