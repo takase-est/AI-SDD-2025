@@ -3,7 +3,7 @@ import { Book, SortConfig, SortKey, ReadStatus, ActivityLog, ActivityType } from
 import { CSV_SEED_DATA, ITEMS_PER_PAGE, INITIAL_ACTIVITIES } from './constants';
 import { parseCSV, generateCSV } from './utils/csvParser';
 import { 
-  SearchIcon, PlusIcon, TrashIcon, ChevronLeftIcon, ChevronRightIcon, 
+  SearchIcon, PlusIcon, TrashIcon, 
   SortIcon, SortAscIcon, SortDescIcon, BookOpenIcon, 
   HomeIcon, ChartBarIcon, UploadIcon, DownloadIcon, MenuIcon, HeartIcon, HelpIcon, ActivityIcon
 } from './components/Icons';
@@ -33,7 +33,7 @@ const App: React.FC = () => {
         return JSON.parse(saved);
       }
       return INITIAL_ACTIVITIES;
-    } catch (e) {
+    } catch {
       return INITIAL_ACTIVITIES;
     }
   });
@@ -347,7 +347,7 @@ const App: React.FC = () => {
           ].map((item) => (
             <button
               key={item.id}
-              onClick={() => { setCurrentView(item.id as any); setIsSidebarOpen(false); }}
+              onClick={() => { setCurrentView(item.id as 'dashboard' | 'activity' | 'help'); setIsSidebarOpen(false); }}
               className={`w-full flex items-center px-4 py-3 border-l-2 transition-all duration-300 font-medium tracking-wide relative overflow-hidden group ${
                   currentView === item.id
                   ? 'text-neon-blue bg-neon-blue/10 border-neon-blue shadow-[inset_0_0_20px_rgba(0,243,255,0.1)]'
@@ -788,7 +788,7 @@ const App: React.FC = () => {
                  
                  <div className="bg-black/40 border border-slate-700 p-4 font-mono text-xs text-slate-300 relative overflow-hidden">
                     <div className="absolute top-0 left-0 w-1 h-full bg-neon-green/50"></div>
-                    <div className="text-slate-500 mb-2">// サンプルデータ</div>
+                    <div className="text-slate-500 mb-2">{/* サンプルデータ */}</div>
                     <div className="text-neon-green">
                       title,author,publisher,publishedYear,isbn,status,isFavorite<br/>
                       銀河鉄道の夜,宮沢 賢治,新潮社,1989,9784101092055,reading,false
