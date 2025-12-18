@@ -46,7 +46,10 @@ CYSHELFは、サイバーパンク風のUIを持つ蔵書管理システムで�
 │   ├── setup.ts           # テストセットアップ
 │   └── TEST_REPORT.md     # テストレポート
 ├── docs/                  # ドキュメント
-│   └── 01_RDD.md         # 要求定義書
+│   ├── 01_RDD.md         # 要求定義書
+│   └── dev/              # 開発者向けドキュメント
+│       ├── CODING_STANDARDS.md  # コーディング規約
+│       └── GITHUB.md     # GitHub運用ガイド
 └── .github/               # GitHub設定
     └── agents/            # AIエージェント設定
 ```
@@ -77,17 +80,9 @@ CYSHELFは、サイバーパンク風のUIを持つ蔵書管理システムで�
 
 ## コーディングスタイルと命名規則
 
-- **コンポーネント**: TypeScript + Reactフック、関数コンポーネント、`const` + アロー関数を推奨
-- **フォーマット**: インデント2スペース、シングルクォート、適切な箇所で末尾カンマ
-- **原則**: コンポーネントは小さく純粋に保つ、状態の直接変更を避ける
-- **命名規則**:
-  - コンポーネント・型: `PascalCase`
-  - ヘルパー関数: `camelCase`
-  - エクスポート定数: `SCREAMING_SNAKE_CASE`
-  - `components/` 内のファイル: `PascalCase.tsx`
-- **インポート**: パスエイリアス `@/*` (tsconfig) を使用
-- **リンティング**: ESLint v9 flat config (`eslint.config.js`)、テストファイルも適切なグローバルでリント
-- **型安全性**: TypeScript strict mode、jest-dom型は `tsconfig.json` で設定
+- **命名規則**: コンポーネント・型は`PascalCase`、ヘルパー関数は`camelCase`、エクスポート定数は`SCREAMING_SNAKE_CASE`
+- **コード品質ツール**: ESLint v9 flat config、TypeScript strict mode
+- **詳細**: コーディング規約の詳細は [docs/dev/CODING_STANDARDS.md](docs/dev/CODING_STANDARDS.md) を参照
 
 ## テストガイドライン
 
@@ -110,6 +105,9 @@ CYSHELFは、サイバーパンク風のUIを持つ蔵書管理システムで�
 
 - **コミットメッセージ**: 簡潔で命令形（例: `Add CSV error handling`）、関連する変更をまとめる
 - **PR内容**: 短い要約、UI変更の主要なスクリーンショット/gif、明確な手動テスト手順（コマンド + 実行したシナリオ）、追跡イシューへのリンク
+- **テンプレート**: Issue/PR作成時は`.github`配下のテンプレートを使用
+- **GitHub CLI**: `gh`コマンドのインストールを推奨（Issue/PRの作成・管理が効率的）
+- **詳細**: GitHub運用の詳細は開発者向けドキュメント [docs/dev/GITHUB.md](docs/dev/GITHUB.md) を参照
 
 ## 環境とデータに関する注意事項
 
