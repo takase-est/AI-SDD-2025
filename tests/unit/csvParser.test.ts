@@ -41,6 +41,88 @@ Book1,Author1,,,9781234567890,unread,false`;
       expect(result[0].publisher).toBe('Unknown Publisher');
       expect(result[0].publishedYear).toBe(0);
     });
+
+    // Given: CSVにカンマを含む値が含まれている
+    // When: parseCSVでパースする
+    // Then: カンマが正しく処理され、値が分割されない
+    it('should handle values containing commas', () => {
+      const csv = `title,author,publisher,publishedYear,isbn,status,isFavorite
+"Book, with comma",Author1,Publisher1,2020,9781234567890,read,true`;
+      
+      const result = parseCSV(csv);
+      
+      expect(result).toHaveLength(1);
+      expect(result[0].title).toBe('Book, with comma');
+    });
+
+    // Given: CSVにダブルクォートを含む値が含まれている
+    // When: parseCSVでパースする
+    // Then: エスケープされたダブルクォートが正しく処理される
+    it('should handle values containing escaped double quotes', () => {
+      const csv = `title,author,publisher,publishedYear,isbn,status,isFavorite
+"Book ""quote""",Author1,Publisher1,2020,9781234567890,read,true`;
+      
+      const result = parseCSV(csv);
+      
+      expect(result).toHaveLength(1);
+      expect(result[0].title).toBe('Book "quote"');
+    });
+
+    // Given: CSVに改行を含む値が含まれている
+    // When: parseCSVでパースする
+    // Then: 改行が正しく処理され、値が分割されない
+    it('should handle values containing newlines', () => {
+      const csv = `title,author,publisher,publishedYear,isbn,status,isFavorite
+"Book\nnewline",Author1,Publisher1,2020,9781234567890,read,true`;
+      
+      const result = parseCSV(csv);
+      
+      expect(result).toHaveLength(1);
+      expect(result[0].title).toBe('Book\nnewline');
+    });
+
+    // Given: CSVにtitleが欠損している行がある
+    // When: parseCSVでパースする
+    // Then: その行はスキップされる（Unknown Titleとして除外される）
+    it('should skip rows with missing title', () => {
+      const csv = `title,author,publisher,publishedYear,isbn,status,isFavorite
+,Author1,Publisher1,2020,9781234567890,read,true
+Book1,Author2,Publisher2,2021,9780987654321,unread,false`;
+      
+      const result = parseCSV(csv);
+      
+      expect(result).toHaveLength(1);
+      expect(result[0].title).toBe('Book1');
+      expect(result[0].author).toBe('Author2');
+    });
+
+    // Given: CSVにauthorが欠損している行がある
+    // When: parseCSVでパースする
+    // Then: Unknown Authorが設定される（現在の実装ではスキップされない）
+    it('should handle rows with missing author', () => {
+      const csv = `title,author,publisher,publishedYear,isbn,status,isFavorite
+Book1,,Publisher1,2020,9781234567890,read,true`;
+      
+      const result = parseCSV(csv);
+      
+      expect(result).toHaveLength(1);
+      expect(result[0].title).toBe('Book1');
+      expect(result[0].author).toBe('Unknown Author');
+    });
+
+    // Given: CSVにカンマがない不正な形式の行がある
+    // When: parseCSVでパースする
+    // Then: 最初の値のみがtitleとして設定され、他の値はデフォルト値になる
+    it('should handle malformed CSV without commas', () => {
+      const csv = `title,author,publisher,publishedYear,isbn,status,isFavorite
+Book1 Author1`;
+      
+      const result = parseCSV(csv);
+      
+      expect(result).toHaveLength(1);
+      expect(result[0].title).toBe('Book1 Author1');
+      expect(result[0].author).toBe('Unknown Author');
+    });
   });
 
   describe('generateCSV', () => {

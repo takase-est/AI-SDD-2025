@@ -1,11 +1,82 @@
 import { Book, ReadStatus } from '../types';
 
+const parseCSVLine = (line: string): string[] => {
+  const values: string[] = [];
+  let current = '';
+  let inQuotes = false;
+  
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+    const nextChar = line[i + 1];
+    
+    if (char === '"') {
+      if (inQuotes && nextChar === '"') {
+        // Escaped quote
+        current += '"';
+        i++; // Skip next quote
+      } else if (!inQuotes) {
+        // Start of quoted field
+        inQuotes = true;
+      } else {
+        // End of quoted field
+        inQuotes = false;
+      }
+    } else if (char === ',' && !inQuotes) {
+      // Field separator
+      values.push(current);
+      current = '';
+    } else {
+      current += char;
+    }
+  }
+  
+  // Add last field
+  values.push(current);
+  return values;
+};
+
+const splitCSVLines = (csvText: string): string[] => {
+  const lines: string[] = [];
+  let current = '';
+  let inQuotes = false;
+  
+  for (let i = 0; i < csvText.length; i++) {
+    const char = csvText[i];
+    const nextChar = csvText[i + 1];
+    
+    if (char === '"') {
+      if (inQuotes && nextChar === '"') {
+        // Escaped quote - keep both quotes for parseCSVLine to handle
+        current += '""';
+        i++; // Skip next quote
+      } else {
+        // Toggle quote state
+        inQuotes = !inQuotes;
+        current += char;
+      }
+    } else if (char === '\n' && !inQuotes) {
+      // Line separator (only when not in quotes)
+      lines.push(current);
+      current = '';
+    } else {
+      current += char;
+    }
+  }
+  
+  // Add last line
+  if (current.trim()) {
+    lines.push(current);
+  }
+  
+  return lines;
+};
+
 export const parseCSV = (csvText: string): Book[] => {
-  const lines = csvText.trim().split('\n');
+  const lines = splitCSVLines(csvText.trim());
   
   // Skip header row and map the rest
   return lines.slice(1).map((line, index) => {
-    const values = line.split(',');
+    const values = parseCSVLine(line);
     
     // Ensure we have enough values, fill with defaults if missing
     const title = values[0]?.trim() || 'Unknown Title';

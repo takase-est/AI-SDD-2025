@@ -80,5 +80,23 @@ export default [
       },
     },
   },
+  {
+    files: ['tests/**/*.{ts,tsx}'],
+    languageOptions: {
+      globals: {
+        global: 'readonly',
+        globalThis: 'readonly',
+        vi: 'readonly',
+        describe: 'readonly',
+        it: 'readonly',
+        expect: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
+        setTimeout: 'readonly',
+        File: 'readonly',
+        ProgressEvent: 'readonly',
+      },
+    },
+  },
 ];
 
