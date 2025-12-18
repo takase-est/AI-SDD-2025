@@ -1,5 +1,4 @@
 ---
-name: Context Agent
 description: AGENTS.mdを生成・レビュー・改善し、リポジトリ全体をコンパクトに俯瞰できるドキュメントを維持する包括的なエージェント
 ---
 
