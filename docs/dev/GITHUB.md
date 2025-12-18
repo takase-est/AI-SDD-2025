@@ -1,8 +1,8 @@
-# GitHub Label 運用ガイド
+# GitHub運用ガイド
 
 ## 概要
 
-このリポジトリでは、Conventional Commits形式のGitHub Labelを使用して、IssueやPull Requestを分類・管理しています。
+このリポジトリでは、Conventional Commits形式のGitHub Labelを使用して、IssueやPull Requestを分類・管理しています。また、ブランチ命名規則を定めることで、ブランチの目的を明確にし、一貫性を保っています。
 
 ## ラベル一覧
 
@@ -174,6 +174,64 @@ PR テンプレートには Conventional Commits 形式のチェックリスト�
 ### 5. 複雑な変更は分割
 
 1つの PR で複数の種類の変更を行う場合、可能であれば複数の PR に分割することを検討してください。レビューがしやすくなります。
+
+## ブランチ命名規則
+
+### 基本形式
+
+ブランチ名は以下の形式に従ってください：
+
+```
+<type>/<description>
+```
+
+- **`<type>`**: Conventional Commits形式のタイプ（例: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`など）
+- **`<description>`**: 簡潔な説明（ハイフン区切り、小文字推奨）
+
+### 使用可能なタイプ
+
+ラベル一覧の「変更の種類（Type）」セクションを参照してください：
+- `feat` - 新機能
+- `fix` - バグ修正
+- `docs` - ドキュメントのみの変更
+- `style` - コードの動作に影響しない変更
+- `refactor` - リファクタリング
+- `perf` - パフォーマンス改善
+- `test` - テストの追加・修正
+- `build` - ビルドシステムや外部依存関係の変更
+- `ci` - CI/CD設定やスクリプトの変更
+- `chore` - その他の変更
+- `revert` - 以前のコミットの取り消し
+
+### 命名例
+
+**基本的な形式:**
+- `feat/add-csv-import` - CSVインポート機能の追加
+- `fix/modal-close-bug` - モーダルクローズのバグ修正
+- `docs/update-github-guide` - GitHub運用ガイドの更新
+- `refactor/extract-utils` - ユーティリティ関数の抽出
+- `test/add-component-tests` - コンポーネントテストの追加
+
+**Issue番号を含める場合:**
+```
+<type>/<issue-number>-<description>
+```
+
+- `feat/123-add-csv-import` - Issue #123 に関連するCSVインポート機能の追加
+- `fix/456-modal-close-bug` - Issue #456 に関連するモーダルクローズのバグ修正
+
+### 命名規則のチェックポイント
+
+1. **タイプの一貫性**: ラベルと同じタイプを使用する
+2. **説明の明確性**: ブランチの目的が一目で分かる説明を付ける
+3. **命名の簡潔性**: 長すぎる説明は避け、必要最小限の情報を含める
+4. **大文字小文字**: 小文字とハイフンを使用（例: `add-csv-import`、`update-readme`）
+
+### ベストプラクティス
+
+- **1つのブランチで1つの目的**: 1つのブランチで複数の種類の変更を行わない
+- **Issue番号の活用**: 関連するIssueがある場合は、Issue番号を含めることで追跡しやすくなる
+- **マージ後の削除**: マージが完了したブランチは削除する
 
 ## 参考資料
 
